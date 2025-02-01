@@ -16,6 +16,13 @@ const Characters = () => {
     // const [next, setNext] = useState("")
     const [info, setInfo] = useState({})
 
+    const handlePages =  async (newPage) => {
+      let response = await fetch(`${BASE_URL}/?${newPage}`)
+      let datos = await response.json()
+      setPersonajes(datos.results)
+      setInfo(datos.info)
+      setNombre()
+    }
 
     useEffect(() => {
         getCharacters()
@@ -40,8 +47,12 @@ const Characters = () => {
         
     }
 
-    const handleSubmit = () => {
-
+    const handleClick = async () => {
+      let response = await fetch(`${BASE_URL}/?name=${nombre}`)
+      let datos = await response.json()
+      setPersonajes(datos.results)
+      setInfo(datos.info)
+      console.log(datos)
     }
 
     // const handlePrev  = async() => {
@@ -82,7 +93,7 @@ const Characters = () => {
           <div className="container characters">
                 <label htmlFor="">Busca Tu Personaje </label>
                 <input type="text" onChange={(e) => setNombre(e.target.value)} />
-                <Button type="button" onClick={handleSubmit}>Buscar</Button>
+                <Button type="button" onClick={handleClick}>Buscar</Button>
               <Row >
               {loading ?  <h3>Cargando...</h3> : personajes.map(personaje => <Character key={personaje.id} {...personaje }/>)}
               </Row>
@@ -90,7 +101,7 @@ const Characters = () => {
 
         
 
-        <Paginate {...info}/>
+        <Paginate {...info} handlePages={handlePages}/>
 
         
         

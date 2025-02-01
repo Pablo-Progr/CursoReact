@@ -1,6 +1,27 @@
 import { Pagination } from "react-bootstrap"
 
-const Paginate = () => {
+const Paginate = ({prev, next, handlePages}) => {
+  const handlePrev  = async() => {
+    let datos = prev.split("?")
+
+     const [,newurl] = datos
+     handlePages(newurl)
+    }
+
+    const handleNext  = async() => {
+     let datos = next.split("?")
+
+     const [,newurl] = datos
+     handlePages(newurl)
+    }
+
+    const handleUltimo  = async() => {
+
+    }
+
+    
+
+
   return (
     <div>
       <Pagination>
